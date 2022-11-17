@@ -35,15 +35,15 @@ public class AppUserServiceImpl implements AppUserService{
     @Override
     public void addRoleToUser(String username, String roleName) {
         log.info("Saving new role {} to user {} to database", roleName, username);
-        AppUser appUser = appUserRepository.findAppUserByName(username);
+        AppUser appUser = appUserRepository.getAppUserByUsername(username);
         Role role = roleRepository.findByName(roleName);
-        appUser.getRoles().add(role);
+        appUser.setRole(role);
     }
 
     @Override
     public AppUser getUser(String username) {
         log.info("Getting existing user {} to database", username);
-        return appUserRepository.findAppUserByName(username);
+        return appUserRepository.getAppUserByUsername(username);
     }
 
     @Override

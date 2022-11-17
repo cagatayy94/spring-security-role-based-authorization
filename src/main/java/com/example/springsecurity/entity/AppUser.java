@@ -1,12 +1,16 @@
 package com.example.springsecurity.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -17,4 +21,8 @@ public class AppUser {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+
+    public void setRole(Role role){
+        roles.add(role);
+    }
 }
