@@ -7,6 +7,8 @@ import com.example.springsecurity.entity.dataAccess.AppUserRepository;
 import com.example.springsecurity.entity.dataAccess.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +18,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class AppUserServiceImpl implements AppUserService{
+public class AppUserServiceImpl implements AppUserService {
     private final AppUserRepository appUserRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public AppUser saveUser(AppUser user) {
         log.info("Saving new user {} to database", user.getName());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return appUserRepository.save(user);
     }
 
